@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register - Student Technology and Innovation Conference</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site">
+    <div class="bar">
+      <span class="brand">STIC 2026</span>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#fees">Fees</a>
+        <a href="register.html" class="active">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Conference registration</h1>
+    <div class="layout">
+      <form id="regForm" action="process.php" method="POST" onsubmit="return validateForm()" novalidate>
+
+        <fieldset>
+          <legend>Personal details</legend>
+          <div class="field" id="f-fullname">
+            <label for="fullname">Full name</label>
+            <input type="text" id="fullname" name="fullname">
+            <div class="error" id="err-fullname"></div>
+          </div>
+          <div class="field" id="f-regno">
+            <label for="regno">Admission / registration number</label>
+            <input type="text" id="regno" name="regno">
+            <div class="error" id="err-regno"></div>
+          </div>
+          <div class="field" id="f-email">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email">
+            <div class="error" id="err-email"></div>
+          </div>
+          <div class="field" id="f-phone">
+            <label for="phone">Phone number (10 digits)</label>
+            <input type="tel" id="phone" name="phone" maxlength="10">
+            <div class="error" id="err-phone"></div>
+          </div>
+          <div class="field" id="f-year">
+            <label for="year">Year of study</label>
+            <select id="year" name="year">
+              <option value="1">Year 1</option>
+              <option value="2">Year 2</option>
+              <option value="3">Year 3</option>
+              <option value="4">Year 4</option>
+              <option value="5">Year 5</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Participation</legend>
+          <div class="field" id="f-category">
+            <label for="category">Participation category</label>
+            <select id="category" name="category" onchange="showWorkshop(); calculateFee()">
+              <option value="">-- Select a category --</option>
+              <option value="Conference Only">Conference Only</option>
+              <option value="Workshop Participant">Workshop Participant</option>
+            </select>
+            <div class="error" id="err-category"></div>
+          </div>
+
+          <div class="field hidden" id="workshopBox">
+            <label for="workshop">Workshop selection</label>
+            <select id="workshop" name="workshop" onchange="calculateFee()">
+              <option value="Web Development">Web Development</option>
+              <option value="Mobile App Development">Mobile App Development</option>
+              <option value="Data Science and AI">Data Science and AI</option>
+              <option value="Cybersecurity Basics">Cybersecurity Basics</option>
+            </select>
+          </div>
+
+          <div class="field" id="f-days">
+            <label for="days">Number of conference days (1 - 3)</label>
+            <input type="number" id="days" name="days" value="1" min="1" max="3" oninput="calculateFee()">
+            <div class="error" id="err-days"></div>
+          </div>
+
+          <div class="field">
+            <label for="meal">Meal option</label>
+            <select id="meal" name="meal" onchange="calculateFee()">
+              <option value="None">No meals</option>
+              <option value="Lunch">Lunch (every conference day)</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Extras</legend>
+          <div class="check">
+            <input type="checkbox" id="tshirt" name="tshirt" value="Yes" onclick="calculateFee()">
+            <label for="tshirt">Conference T-shirt (KSh 800)</label>
+          </div>
+          <div class="check">
+            <input type="checkbox" id="accommodation" name="accommodation" value="Yes" onclick="toggleAccommodation()">
+            <label for="accommodation">Accommodation (KSh 1,500 per night)</label>
+          </div>
+          <div class="field" id="f-nights">
+            <label for="nights">Number of nights (1 - 3)</label>
+            <input type="number" id="nights" name="nights" value="1" min="1" max="3" disabled oninput="calculateFee()">
+            <div class="error" id="err-nights"></div>
+          </div>
+        </fieldset>
+
+        <input type="hidden" id="totalField" name="total" value="0">
+        <div class="actions">
+          <button type="submit" class="btn">Submit registration</button>
+          <button type="button" class="btn secondary" onclick="resetAll()">Clear form</button>
+        </div>
+      </form>
+
+      <aside class="summary" aria-live="polite">
+        <h2>Your fee</h2>
+        <div class="package" id="packageMsg">Select a participation category to see your package.</div>
+        <ul>
+          <li><span>Registration</span><span id="s-reg">KSh 0</span></li>
+          <li><span>Attendance</span><span id="s-att">KSh 0</span></li>
+          <li><span>Workshop</span><span id="s-ws">KSh 0</span></li>
+          <li><span>Meals</span><span id="s-meal">KSh 0</span></li>
+          <li><span>T-shirt</span><span id="s-tshirt">KSh 0</span></li>
+          <li><span>Accommodation</span><span id="s-acc">KSh 0</span></li>
+        </ul>
+        <div class="total"><span>Total</span><span id="totalDisplay">KSh 0</span></div>
+      </aside>
+    </div>
+  </main>
+  <footer>Student Technology and Innovation Conference 2026</footer>
+  <script src="js/script.js"></script>
+</body>
+</html>
